@@ -149,4 +149,4 @@ python test_mcp.py
 
 ## License
 
-This project is proprietary and confidential.
+This project is licensed under the [Apache Licence v2](LICENCE)

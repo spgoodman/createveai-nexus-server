@@ -1,0 +1,10 @@
+services:
+  createveai-api-server:
+    container_name: createveai-api-server
+    image: python:3.10
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: python3 /app/main.py
+    ports:
+      - 43080:43080

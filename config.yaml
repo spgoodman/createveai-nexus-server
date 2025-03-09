@@ -1,0 +1,49 @@
+apiserver:
+  host: localhost # Host to listen on
+  port: 43080 # Port to listen on
+  debug: true # Debug to console
+  log: true # Log to file
+  log_file: logs/apiserver.log # Log file relevative to main.py
+  log_level: debug # Log level
+  log_max_size: 10 # Max size of log file in MB
+  apis_dir: custom_apis # Directory containing Python source for API interfaces to load and serve using FastAPI, relevative to main.py
+security:
+  api_keys: # List of API keys that are valid for accessing the API server. Each has access to its own queue of jobs
+    - key: "sk-apiservertest1"
+      description: "API Key 1"
+    - key: "sk-apiservertest2"
+      description: "API Key 2"
+    - key: "sk-apiservertest3"
+      description: "API Key 3"
+processing:
+  max_threads: 10
+  max_queue_size: 100
+  process_timeout_seconds: 300
+  client_idle_timeout_seconds: 300
+  state_file: processing/state.json # State file relevative to main.py
+  temp_dir: processing/tmp # Temp directory relevative to main.py
+  resume_on_startup: true
+  clear_temp_on_startup_without_resume: true
+  clear_temp_files_after_processing: true
+  reload_on_api_dir_change: true # Check and attempt to reload with new API interfaces when the API directory contents changes such as adding a new API interface file
+  reload_on_api_dir_change_interval_seconds: 120 # Interval to check for changes in the API directory
+  reload_on_api_file_change: true # Check and attempt to reload API interfaces when the API interface file changes
+  reload_on_api_file_change_interval_seconds: 120 # Interval to check for changes in the API interface file
+  wait_for_processing_before_reload: true # Wait for processing to complete that cannot be resumed from the state file, such as a remote request or data processing.
+mcp_server:
+  enabled: true # Enable MCP server functionality
+  server_info:
+    name: "createveai-nexus" # Server name
+    version: "1.0.0" # Server version
+    description: "Createve.AI Nexus Server MCP Interface" # Server description
+  tools:
+    auto_map_apis: true # Automatically map API endpoints to MCP tools
+    excluded_apis: [] # APIs to exclude from tool mapping
+    additional_tools: [] # Additional tool definitions not mapped from APIs
+  resources:
+    expose_queue: true # Expose queue state as resources
+    expose_docs: true # Expose API documentation as resources
+    expose_logs: false # Expose server logs as resources
+  security:
+    use_api_keys: true # Use API keys for MCP authentication
+    require_authentication: true # Require authentication for MCP endpoints

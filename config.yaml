@@ -1,5 +1,5 @@
 apiserver:
-  host: localhost # Host to listen on
+  host: 0.0.0.0 # Host to listen on
   port: 43080 # Port to listen on
   debug: true # Debug to console
   log: true # Log to file

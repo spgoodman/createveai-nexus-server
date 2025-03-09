@@ -54,7 +54,7 @@ async def create_app(config_path: str = "./config.yaml"):
     await queue_manager.start_workers(api_executor)
     
     # Create OpenAPI generator
-    openapi_generator = OpenAPIGenerator(apis)
+    openapi_generator = OpenAPIGenerator(apis, config)
     
     # Create routes
     route_generator = RouteGenerator(

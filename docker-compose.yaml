@@ -1,10 +1,12 @@
 services:
-  createveai-api-server:
-    container_name: createveai-api-server
-    image: python:3.10
-    working_dir: /app
-    volumes:
-      - .:/app
-    command: python3 /app/main.py
+  createveai-nexus-server:
+    container_name: createveai-nexus-server
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 43080:43080
+    volumes:
+      - ./logs:/app/logs
+      - ./processing:/app/processing
+      - ./custom_apis:/app/custom_apis

@@ -24,11 +24,13 @@
         "text": "This is the first sentence about testing. This is a second sentence about APIs. This is a third sentence about summarization techniques. This is a fourth sentence about natural language processing. This is a fifth sentence about text analysis.",
         "summary_length": 2
       },
-      "status": "queued",
-      "result": null,
+      "status": "completed",
+      "result": {
+        "summary": "This is a third sentence about summarization techniques. This is a fourth sentence about natural language processing."
+      },
       "error": null,
       "created_at": 1741555656.3086126,
-      "updated_at": 1741555656.3086128
+      "updated_at": 1741557145.9171326
     },
     {
       "queue_id": "bb8274e0-b755-4507-ac66-375f89a7fae7",
@@ -38,11 +40,13 @@
         "text": "This is the first sentence about testing. This is a second sentence about APIs. This is a third sentence about summarization techniques. This is a fourth sentence about natural language processing. This is a fifth sentence about text analysis.",
         "summary_length": 2
       },
-      "status": "queued",
-      "result": null,
+      "status": "completed",
+      "result": {
+        "summary": "This is a third sentence about summarization techniques. This is a fourth sentence about natural language processing."
+      },
       "error": null,
       "created_at": 1741555708.9174843,
-      "updated_at": 1741555708.9174845
+      "updated_at": 1741557145.91749
     }
   ]
 }

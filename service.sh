@@ -1,7 +1,7 @@
 #!/bin/bash
 API_ROOT=$(dirname $(realpath "${0}"))
 SERVICE_TEMPLATE="${API_ROOT}/service.template"
-SERVICE_NAME="createveai-api-server"
+SERVICE_NAME="createveai-nexus"
 SERVICE_USER=$(whoami)
 SERVICE_GROUP=$(groups | awk '{print $1}')
 # Check for ability to sudo

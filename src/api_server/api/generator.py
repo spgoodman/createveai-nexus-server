@@ -6,8 +6,9 @@ import re
 class OpenAPIGenerator:
     """OpenAPI schema generator for API endpoints."""
     
-    def __init__(self, apis: Dict[str, Dict[str, Any]]):
+    def __init__(self, apis: Dict[str, Dict[str, Any]], config=None):
         self.apis = apis
+        self.config = config
     
     def generate_schema(self) -> Dict[str, Any]:
         """Generate OpenAPI schema for all API endpoints."""
@@ -64,6 +65,8 @@ class OpenAPIGenerator:
                 "description": "API server for various services",
                 "version": "1.0.0"
             },
+            # Adding servers array which is required by the OpenAPI spec
+            "servers": self._generate_servers(),
             "paths": paths,
             "components": {
                 "schemas": schemas,
@@ -362,6 +365,49 @@ class OpenAPIGenerator:
             }
         
         return schema
+    
+    def _generate_servers(self) -> List[Dict[str, str]]:
+        """Generate servers array for OpenAPI schema."""
+        servers = []
+        
+        # Use configuration if available
+        if self.config:
+            host = self.config.host
+            port = self.config.port
+            
+            # Add the main configured host
+            servers.append({
+                "url": f"http://{host}:{port}",
+                "description": "Primary server"
+            })
+            
+            # Include alternative access methods only if they differ from the main host
+            if host != 'localhost' and host != '127.0.0.1':
+                servers.append({
+                    "url": f"http://localhost:{port}",
+                    "description": "Local access"
+                })
+            
+            if host != '0.0.0.0' and host != 'localhost':
+                servers.append({
+                    "url": f"http://0.0.0.0:{port}",
+                    "description": "All interfaces"
+                })
+            
+            # Include internal IP if different
+            if host != '127.0.0.1' and host != 'localhost':
+                servers.append({
+                    "url": f"http://127.0.0.1:{port}",
+                    "description": "Loopback access"
+                })
+        else:
+            # Default if no configuration available
+            servers.append({
+                "url": "http://localhost:43080",
+                "description": "Default server"
+            })
+        
+        return servers
     
     def _convert_type_to_json_schema(self, type_name: str) -> Dict[str, Any]:
         """Convert ComfyUI type to JSON schema."""

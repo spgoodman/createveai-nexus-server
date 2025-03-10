@@ -21,7 +21,7 @@
     "directory": "src/mcp_server"
   },
   "scripts": {
-    "build": "tsc && chmod +x build/index.js",
+    "build": "npx tsc && mkdir -p build && chmod +x build/index.js",
     "start": "node build/index.js",
     "dev": "tsx src/index.ts",
     "test": "vitest",

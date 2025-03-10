@@ -31,14 +31,15 @@ jobs:
         
       - name: Verify build files
         run: |
-          ls -la build/
+          ls -la
+          ls -la build/ || echo "Build directory not found!"
           if [ ! -f build/index.js ]; then
             echo "Build files missing!"
             exit 1
           fi
           if [ ! -x build/index.js ]; then
-            echo "index.js is not executable!"
-            exit 1
+            echo "index.js is not executable! Fixing..."
+            chmod +x build/index.js
           fi
       
       - name: Extract version from tag

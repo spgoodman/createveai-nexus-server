@@ -55,60 +55,66 @@ export async function registerTools(
         continue;
       }
       
-      // Convert OpenAPI schema to Zod schema
-      const schemaObj = convertOpenApiToZodSchema(requestBody);
-      
-      // Register the tool
-      server.tool(
-        toolName,
-        schemaObj,
-        // Tool implementation function
-        async (params) => {
-          try {
-            // Execute the API call
-            const result = await nexusClient.executeApi(apiPath, params);
-            
-            // Check if it's a queue operation
-            if (result.queue_id) {
+      try {
+        // Create a simple parameter schema with one 'data' parameter that accepts any JSON
+        const toolParams = {
+          data: z.any().describe(`Input data for ${toolName}`)
+        };
+        
+        // Register the tool with proper parameter order:
+        // 1. name, 2. description (string), 3. params schema, 4. callback
+        server.tool(
+          toolName,
+          description,
+          toolParams,
+          async (args, extra) => {
+            try {
+              // If data is not provided, use an empty object
+              const data = args.data || {};
+              
+              // Execute the API call with the data field
+              const result = await nexusClient.executeApi(apiPath, data);
+              
+              // Check if it's a queue operation
+              if (result.queue_id) {
+                return {
+                  content: [
+                    {
+                      type: "text",
+                      text: `Operation queued with ID: ${result.queue_id}\n\nYou can check the status using the queue://${result.queue_id} resource.`
+                    },
+                    {
+                      type: "json",
+                      json: { queue_id: result.queue_id }
+                    }
+                  ]
+                };
+              }
+              
+              // Format the response based on its structure
+              return formatApiResponse(result);
+            } catch (error: any) {
+              // Return properly formatted error
               return {
                 content: [
                   {
                     type: "text",
-                    text: `Operation queued with ID: ${result.queue_id}\n\nYou can check the status using the queue://${result.queue_id} resource.`
-                  },
-                  {
-                    type: "json",
-                    json: { queue_id: result.queue_id }
+                    text: `Error executing ${toolName}: ${error.message}`
                   }
-                ]
+                ],
+                isError: true
               };
             }
-            
-            // Format the response based on its structure
-            return formatApiResponse(result);
-          } catch (error: any) {
-            // Return properly formatted error
-            return {
-              content: [
-                {
-                  type: "text",
-                  text: `Error executing ${toolName}: ${error.message}`
-                }
-              ],
-              isError: true
-            };
           }
-        },
-        // Additional tool options
-        {
-          description
+        );
+        
+        registeredCount++;
+        
+        if (config.debug) {
+          console.error(chalk.green(`Registered tool: ${toolName}`));
         }
-      );
-      
-      registeredCount++;
-      
-      if (config.debug) {
-        console.error(chalk.green(`Registered tool: ${toolName}`));
+      } catch (error: any) {
+        console.error(chalk.red(`Error registering tool ${toolName}: ${error.message}`));
       }
     }
     

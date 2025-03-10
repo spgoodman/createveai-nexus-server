@@ -8,9 +8,10 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy 
+# Copy relevant files
+RUN mkdir -p logs processing/tmp src
 COPY main.py .
-COPY src .
+COPY src/api_server ./src/api_server
 COPY custom_apis .
 COPY config.yaml .
 COPY LICENSE .

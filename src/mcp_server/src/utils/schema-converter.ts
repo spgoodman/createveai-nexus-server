@@ -22,24 +22,24 @@ export function convertOpenApiToZodSchema(openApiSchema: any): Record<string, z.
         
         // Add string format validations
         if (propSchema.format === "email") {
-          zodSchema = zodSchema.email();
+          zodSchema = z.string().email();
         } else if (propSchema.format === "uri" || propSchema.format === "url") {
-          zodSchema = zodSchema.url();
+          zodSchema = z.string().url();
         } else if (propSchema.format === "uuid") {
-          zodSchema = zodSchema.uuid();
+          zodSchema = z.string().uuid();
         }
         
         // Add string length validations
         if (propSchema.minLength !== undefined) {
-          zodSchema = zodSchema.min(propSchema.minLength);
+          zodSchema = z.string().min(propSchema.minLength);
         }
         if (propSchema.maxLength !== undefined) {
-          zodSchema = zodSchema.max(propSchema.maxLength);
+          zodSchema = z.string().max(propSchema.maxLength);
         }
         
         // Add pattern validation
         if (propSchema.pattern) {
-          zodSchema = zodSchema.regex(new RegExp(propSchema.pattern));
+          zodSchema = z.string().regex(new RegExp(propSchema.pattern));
         }
         
         // Add enum validation
@@ -54,13 +54,13 @@ export function convertOpenApiToZodSchema(openApiSchema: any): Record<string, z.
         
         // Add numeric validations
         if (propSchema.minimum !== undefined) {
-          zodSchema = zodSchema.min(propSchema.minimum);
+          zodSchema = z.number().min(propSchema.minimum);
         }
         if (propSchema.maximum !== undefined) {
-          zodSchema = zodSchema.max(propSchema.maximum);
+          zodSchema = z.number().max(propSchema.maximum);
         }
         if (propSchema.multipleOf !== undefined) {
-          zodSchema = zodSchema.multipleOf(propSchema.multipleOf);
+          zodSchema = z.number().multipleOf(propSchema.multipleOf);
         }
         break;
         
@@ -81,10 +81,10 @@ export function convertOpenApiToZodSchema(openApiSchema: any): Record<string, z.
         
         // Add array validations
         if (propSchema.minItems !== undefined) {
-          zodSchema = zodSchema.min(propSchema.minItems);
+          zodSchema = z.array(itemSchema).min(propSchema.minItems);
         }
         if (propSchema.maxItems !== undefined) {
-          zodSchema = zodSchema.max(propSchema.maxItems);
+          zodSchema = z.array(itemSchema).max(propSchema.maxItems);
         }
         break;
         

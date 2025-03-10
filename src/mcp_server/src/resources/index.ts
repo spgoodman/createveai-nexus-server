@@ -40,9 +40,9 @@ function registerQueueResources(
   server.resource(
     "queue",
     new ResourceTemplate("queue://{queueId}", { list: undefined }),
-    async (uri, { queueId }) => {
+    async (uri: URL, variables: { queueId: string }) => {
       try {
-        const status = await nexusClient.getQueueStatus(queueId);
+        const status = await nexusClient.getQueueStatus(variables.queueId);
         
         return {
           contents: [{
@@ -77,7 +77,7 @@ function registerDocResources(
   server.resource(
     "readme",
     "docs://readme",
-    async (uri) => {
+    async (uri: URL) => {
       try {
         const docs = await nexusClient.getDocumentation();
         
@@ -104,15 +104,15 @@ function registerDocResources(
   server.resource(
     "docs",
     new ResourceTemplate("docs://{path}", { list: undefined }),
-    async (uri, { path }) => {
+    async (uri: URL, variables: { path: string }) => {
       try {
-        const docs = await nexusClient.getDocumentation(path);
+        const docs = await nexusClient.getDocumentation(variables.path);
         
         // Determine MIME type based on path
         let mimeType = "text/plain";
-        if (path.endsWith(".md")) {
+        if (variables.path.endsWith(".md")) {
           mimeType = "text/markdown";
-        } else if (path.endsWith(".json")) {
+        } else if (variables.path.endsWith(".json")) {
           mimeType = "application/json";
         }
         
@@ -150,7 +150,7 @@ function registerSchemaResources(
   server.resource(
     "schema",
     "schema://openapi",
-    async (uri) => {
+    async (uri: URL) => {
       try {
         const schema = await nexusClient.getSchema();
         
@@ -179,7 +179,7 @@ function registerSchemaResources(
     server.resource(
       "api-schema",
       `schema://${config.api}`,
-      async (uri) => {
+      async (uri: URL) => {
         try {
           const schema = await nexusClient.getSchema();
           

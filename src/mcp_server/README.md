@@ -16,25 +16,8 @@ This MCP client server acts as a bridge between AI assistants that support the M
 
 ## Installation
 
-### Prerequisites
-
-- Node.js 18.0.0 or higher
-- Access to a Createve.AI Nexus Server instance
-
-### Build from Source
-
 ```bash
-# Clone the repository
-git clone https://github.com/createve-ai/createveai-nexus-server.git
-
-# Navigate to the MCP server directory
-cd createveai-nexus-server/src/mcp_server
-
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
+npm install @createveai/nexus-mcp-server
 ```
 
 ## Configuration
@@ -66,7 +49,7 @@ Add the MCP server to your Claude environment by modifying the MCP settings conf
   "mcpServers": {
     "createveai-nexus": {
       "command": "node",
-      "args": ["/path/to/createveai-nexus-server/src/mcp_server/build/index.js"],
+      "args": ["/path/to/node_modules/@createveai/nexus-mcp-server/build/index.js"],
       "env": {
         "CREATEVEAI_NEXUS_BASE_URL": "https://nexus.createve.ai",
         "CREATEVEAI_NEXUS_API_KEY": "your-api-key-here"
@@ -94,26 +77,6 @@ The MCP client server dynamically creates tools based on the API endpoints avail
 
 For example, an API endpoint at `/api/text_processing/analyze` would be available as the MCP tool `text_processing_analyze`.
 
-## Development
-
-### Project Structure
-
-```
-src/mcp_server/
-├── package.json               # Node.js package configuration
-├── tsconfig.json              # TypeScript configuration
-├── src/
-│   ├── index.ts               # Entry point
-│   ├── config.ts              # Configuration management
-│   ├── nexus-client.ts        # REST API client
-│   ├── tools/                 # Tool implementation
-│   │   └── index.ts           # Tool registration
-│   ├── resources/             # Resource implementation
-│   │   └── index.ts           # Resource registration
-│   └── utils/                 # Utility functions
-│       └── schema-converter.ts # OpenAPI to Zod schema converter
-```
-
 ## License
 
-This project is licensed under the Apache License 2.0.
+This project is licensed under the MIT License.

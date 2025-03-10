@@ -1,3 +1,4 @@
+# .github/workflows/publish-mcp-server.yml
 name: Publish MCP Server
 
 on:
@@ -23,14 +24,17 @@ jobs:
           scope: '@createveai'
       
       - name: Install dependencies
-        # Use npm install instead of npm ci since there's no package-lock.json
         run: npm install
       
       - name: Build
         run: npm run build
       
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
       - name: Set package version from release
-        run: npm version --no-git-tag-version ${GITHUB_REF#refs/tags/v}
+        run: npm version --no-git-tag-version ${{ steps.get_version.outputs.VERSION }}
       
       - name: Publish to npm
         run: npm publish

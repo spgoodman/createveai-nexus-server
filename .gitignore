@@ -1,3 +1,8 @@
+# Createve.AI Vertex server logs and temp files
+logs/*.log
+processing/state.json
+processing/tmp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

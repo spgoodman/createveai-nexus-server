@@ -6,37 +6,29 @@ This document provides an overview of the architecture of the Createve.AI API Se
 
 The Createve.AI API Server is designed as a modular FastAPI application that dynamically loads and serves Python modules as REST API endpoints. It follows a service-oriented architecture with clear separation of concerns:
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         FastAPI Application                          │
-│                                                                     │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│  │ API Loader  │    │ API Executor│    │ Queue       │              │
-│  │             │───▶│             │───▶│ Manager     │              │
-│  └─────────────┘    └─────────────┘    └─────────────┘              │
-│         │                  ▲                   │                    │
-│         │                  │                   │                    │
-│         ▼                  │                   ▼                    │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│  │ Compatibility│   │ Type        │    │ State       │              │
-│  │ Checker     │   │ Converter   │    │ Management  │              │
-│  └─────────────┘    └─────────────┘    └─────────────┘              │
-│                                                                     │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│  │ Security    │    │ OpenAPI     │    │ Route       │              │
-│  │ Manager     │    │ Generator   │    │ Generator   │              │
-│  └─────────────┘    └─────────────┘    └─────────────┘              │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                         Custom API Modules                          │
-│                                                                     │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │
-│  │ Module 1    │    │ Module 2    │    │ Module 3    │   ...        │
-│  └─────────────┘    └─────────────┘    └─────────────┘              │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph FastAPI["FastAPI Application"]
+        APILoader["API Loader"] --> APIExecutor["API Executor"]
+        APIExecutor --> QueueManager["Queue Manager"]
+        
+        APILoader --> Compatibility["Compatibility\nChecker"]
+        TypeConverter["Type\nConverter"] --> APIExecutor
+        QueueManager --> StateManagement["State\nManagement"]
+        
+        SecurityManager["Security\nManager"]
+        OpenAPIGenerator["OpenAPI\nGenerator"]
+        RouteGenerator["Route\nGenerator"]
+    end
+    
+    FastAPI --> CustomAPI
+    
+    subgraph CustomAPI["Custom API Modules"]
+        Module1["Module 1"]
+        Module2["Module 2"]
+        Module3["Module 3"]
+        ModuleEtc["..."]
+    end
 ```
 
 ## Core Components

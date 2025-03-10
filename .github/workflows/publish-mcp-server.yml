@@ -28,6 +28,18 @@ jobs:
       
       - name: Build
         run: npm run build
+        
+      - name: Verify build files
+        run: |
+          ls -la build/
+          if [ ! -f build/index.js ]; then
+            echo "Build files missing!"
+            exit 1
+          fi
+          if [ ! -x build/index.js ]; then
+            echo "index.js is not executable!"
+            exit 1
+          fi
       
       - name: Extract version from tag
         id: get_version
@@ -36,6 +48,11 @@ jobs:
       - name: Set package version from release
         run: npm version --no-git-tag-version ${{ steps.get_version.outputs.VERSION }}
       
+      - name: Check package contents before publishing
+        run: |
+          npm pack
+          tar -tvf *.tgz
+          
       - name: Publish to npm
         run: npm publish
         env:

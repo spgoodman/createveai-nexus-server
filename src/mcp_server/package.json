@@ -21,11 +21,12 @@
     "directory": "src/mcp_server"
   },
   "scripts": {
-    "build": "tsc || echo 'TypeScript compilation had errors'",
+    "build": "tsc && chmod +x build/index.js",
     "start": "node build/index.js",
     "dev": "tsx src/index.ts",
     "test": "vitest",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build && ls -la build/ && test -f build/index.js && test -x build/index.js"
   },
   "keywords": [
     "mcp",

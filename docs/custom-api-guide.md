@@ -105,10 +105,10 @@ class MyApiEndpoint:
 Every API module must export its classes through three dictionaries:
 
 ```python
-# Map display names to class objects
+# Map display names to class objects. Will always be converted to remove spaces and set the first character to lower case.
 NODE_CLASS_MAPPINGS = {
-    "My API Endpoint": MyApiEndpoint,  # Key is display name, value is class object
-    "Another API": AnotherApiClass,
+    "myAPIEndpoint": MyApiEndpoint,  # Key is display name, value is class object
+    "anotherAPI": AnotherApiClass,
 }
 
 # Map class names to human-readable display names (optional but recommended)
@@ -449,8 +449,8 @@ class TextSummarizer:
 
 # Module exports
 NODE_CLASS_MAPPINGS = {
-    "Text Analyzer": TextAnalyzer,
-    "Text Summarizer": TextSummarizer
+    "TextAnalyzer": TextAnalyzer,
+    "TextSummarizer": TextSummarizer
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {

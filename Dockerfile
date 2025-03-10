@@ -8,14 +8,17 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY . .
-
-# Create required directories
+# Copy 
+COPY main.py .
+COPY src .
+COPY custom_apis .
+COPY config.yaml .
+COPY LICENSE .
+COPY README.md .
 RUN mkdir -p logs processing/tmp
 
 # Expose the port
 EXPOSE 43080
 
 # Command to run the application
-CMD ["python", "main.py", "--host", "0.0.0.0"]
+CMD ["python", "main.py", "--host", "0.0.0.0", "--port", "43080"]

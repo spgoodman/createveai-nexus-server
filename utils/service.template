@@ -1,0 +1,15 @@
+
+[Unit]
+Description={SERVICE_NAME}
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=simple
+ExecStart={API_ROOT}/start.sh
+WorkingDirectory={API_ROOT}
+Restart=on-failure
+RestartSec=5
+User={SERVICE_USER}
+Group={SERVICE_GROUP}
+[Install]
+WantedBy=default.target

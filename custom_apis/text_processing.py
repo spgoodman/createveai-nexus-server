@@ -116,13 +116,13 @@ class TextSummarizer:
 
 # Define mappings
 NODE_CLASS_MAPPINGS = {
-    "Text Analyzer": TextAnalyzer,
-    "Text Summarizer": TextSummarizer
+    "textAnalyzer": TextAnalyzer,
+    "textSummarizer": TextSummarizer
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Text Analyzer": "Text Analyzer",
-    "Text Summarizer": "Text Summarizer"
+    "textAnalyzer": "Text Analyzer",
+    "textSummarizer": "Text Summarizer"
 }
 
 API_SERVER_QUEUE_MODE = {

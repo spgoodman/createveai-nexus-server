@@ -6,12 +6,23 @@ import re
 class OpenAPIGenerator:
     """OpenAPI schema generator for API endpoints."""
     
-    def __init__(self, apis: Dict[str, Dict[str, Any]], config=None):
+    def __init__(self, apis: Dict[str, Dict[str, Any]], config=None, security_manager=None):
         self.apis = apis
         self.config = config
+        self.security_manager = security_manager
     
-    def generate_schema(self) -> Dict[str, Any]:
-        """Generate OpenAPI schema for all API endpoints."""
+    def generate_schema(self, request=None, module=None) -> Dict[str, Any]:
+        """Generate OpenAPI schema for API endpoints.
+        
+        Args:
+            request: Optional request object to get client's HTTP host
+            module: Optional module name to filter endpoints
+        """
+        print(f"OpenAPIGenerator.generate_schema(module={module})")
+        print(f"self.apis contains {len(self.apis)} items")
+        if len(self.apis) > 0:
+            print(f"First API key: {next(iter(self.apis))}")
+            
         paths = {}
         schemas = {
             "QueueRequest": {
@@ -35,8 +46,21 @@ class OpenAPIGenerator:
             }
         }
         
+        # Filter APIs by module if specified
+        if module and module != "openapi":  # Skip filtering if module is "openapi"
+            # Filter for specific module (e.g. "image_processing")
+            filtered_apis = {}
+            for k, v in self.apis.items():
+                if k.startswith(f"{module}/"):
+                    filtered_apis[k] = v
+            print(f"Filtered APIs for module '{module}': {len(filtered_apis)} APIs")
+        else:
+            # No module specified or module is "openapi", include all APIs
+            filtered_apis = dict(self.apis)
+            print(f"Including all APIs: {len(filtered_apis)} APIs")
+            
         # Add path for each API
-        for api_path, api_info in self.apis.items():
+        for api_path, api_info in filtered_apis.items():
             cls = api_info['class']
             schema_name = self._get_schema_name(api_path)
             
@@ -48,7 +72,7 @@ class OpenAPIGenerator:
             schemas[f"{schema_name}Request"] = request_schema
             schemas[f"{schema_name}Response"] = response_schema
             
-            # Generate path
+            # Generate path and add it to paths
             path = self._generate_path(api_path, api_info, schema_name)
             paths[f"/api/{api_path}"] = path
             
@@ -66,7 +90,7 @@ class OpenAPIGenerator:
                 "version": "1.0.0"
             },
             # Adding servers array which is required by the OpenAPI spec
-            "servers": self._generate_servers(),
+            "servers": self._generate_servers(request),
             "paths": paths,
             "components": {
                 "schemas": schemas,
@@ -151,6 +175,7 @@ class OpenAPIGenerator:
                 "summary": api_info.get('display_name', api_path),
                 "description": api_info.get('description', ''),
                 "tags": [api_info.get('category', 'api')],
+                "security": [{"bearerAuth": []}],  # Explicitly add security to each endpoint
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -203,6 +228,7 @@ class OpenAPIGenerator:
                 "summary": f"Check queue status for {api_info.get('display_name', api_path)}",
                 "description": "Check status of a queued request",
                 "tags": [api_info.get('category', 'api')],
+                "security": [{"bearerAuth": []}],  # Explicitly add security to queue endpoints
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -366,42 +392,29 @@ class OpenAPIGenerator:
         
         return schema
     
-    def _generate_servers(self) -> List[Dict[str, str]]:
+    def _generate_servers(self, request=None) -> List[Dict[str, str]]:
         """Generate servers array for OpenAPI schema."""
         servers = []
         
-        # Use configuration if available
+        # Use client's HTTP host from request if available
+        if request and self.security_manager:
+            client_host = self.security_manager.get_request_http_host(request)
+            servers.append({
+                "url": client_host,
+                "description": "Client access URL"
+            })
+            # Only return the client host
+            return servers
+        
+        # Fallback if no request or security manager
         if self.config:
             host = self.config.host
             port = self.config.port
-            
-            # Add the main configured host
             servers.append({
                 "url": f"http://{host}:{port}",
                 "description": "Primary server"
             })
-            
-            # Include alternative access methods only if they differ from the main host
-            if host != 'localhost' and host != '127.0.0.1':
-                servers.append({
-                    "url": f"http://localhost:{port}",
-                    "description": "Local access"
-                })
-            
-            if host != '0.0.0.0' and host != 'localhost':
-                servers.append({
-                    "url": f"http://0.0.0.0:{port}",
-                    "description": "All interfaces"
-                })
-            
-            # Include internal IP if different
-            if host != '127.0.0.1' and host != 'localhost':
-                servers.append({
-                    "url": f"http://127.0.0.1:{port}",
-                    "description": "Loopback access"
-                })
         else:
-            # Default if no configuration available
             servers.append({
                 "url": "http://localhost:43080",
                 "description": "Default server"

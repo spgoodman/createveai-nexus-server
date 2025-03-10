@@ -51,14 +51,33 @@ class RouteGenerator:
             if queue_mode:
                 self._add_queue_status_route(api_router, api_path, api_info)
         
-        # Add OpenAPI route
-        @api_router.get("/openapi.json", tags=["Documentation"])
-        async def get_openapi():
-            """Get OpenAPI schema."""
-            return self.openapi_generator.generate_schema()
+        # Create a separate router for OpenAPI routes with a different prefix
+        openapi_router = APIRouter(
+            prefix="/openapi",
+            tags=["Documentation"]
+        )
         
-        # Include router in app
+        # Add OpenAPI routes
+        
+        # Module-specific OpenAPI schema route
+        @openapi_router.get("/{module}.json", tags=["Documentation"])
+        async def get_module_openapi(request: Request, module: str):
+            """Get OpenAPI schema for a specific module."""
+            return self.openapi_generator.generate_schema(request, module)
+            
+        # General OpenAPI schema at /openapi/openapi.json
+        @openapi_router.get("/openapi.json", tags=["Documentation"])
+        async def get_general_openapi(request: Request):
+            """Get complete OpenAPI schema."""
+            # We pass None for module to include all APIs
+            return self.openapi_generator.generate_schema(request, None)
+        
+        # The /api/openapi.json endpoint is removed as it's not needed
+        # We only use the canonical /openapi/openapi.json and /openapi/{module}.json endpoints
+        
+        # Include routers in app
         self.app.include_router(api_router)
+        self.app.include_router(openapi_router)
     
     def _add_direct_route(self, router, api_path: str, api_info: Dict[str, Any]):
         """Add direct route for API endpoint."""

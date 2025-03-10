@@ -11,7 +11,6 @@ from ..utils import ConfigManager, LoggingManager
 from .security import SecurityManager
 from .queue import QueueManager
 from ..api import APILoader, APIExecutor, OpenAPIGenerator, RouteGenerator
-from ..mcp import MCPServer
 
 async def create_app(config_path: str = "./config.yaml"):
     """Create a new FastAPI application instance."""
@@ -54,7 +53,7 @@ async def create_app(config_path: str = "./config.yaml"):
     await queue_manager.start_workers(api_executor)
     
     # Create OpenAPI generator
-    openapi_generator = OpenAPIGenerator(apis, config)
+    openapi_generator = OpenAPIGenerator(apis, config, security_manager)
     
     # Create routes
     route_generator = RouteGenerator(
@@ -68,14 +67,8 @@ async def create_app(config_path: str = "./config.yaml"):
     )
     route_generator.generate_routes()
     
-    # Initialize MCP server (if enabled)
-    if config.mcp_enabled:
-        logger.info("Initializing MCP server")
-        mcp_server = MCPServer(app, config, logger, security_manager)
-        await mcp_server.setup_registries(api_executor, queue_manager, apis)
-        logger.info(f"MCP server initialized: {config.mcp_server_name}")
-    else:
-        logger.info("MCP server is disabled")
+    # MCP server is now handled by the standalone TypeScript implementation
+    logger.info("Using standalone TypeScript MCP client server implementation")
     
     # Add file watcher for API changes
     if config.reload_on_api_dir_change or config.reload_on_api_file_change:

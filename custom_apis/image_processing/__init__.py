@@ -9,14 +9,14 @@ from .processors import ThumbnailGenerator, ImageResizer
 
 # Map class names to class objects
 NODE_CLASS_MAPPINGS = {
-    "Thumbnail Generator": ThumbnailGenerator,
-    "Image Resizer": ImageResizer
+    "thumbnailGenerator": ThumbnailGenerator,
+    "imageResizer": ImageResizer
 }
 
 # Map class names to display names
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Thumbnail Generator": "Thumbnail Generator",
-    "Image Resizer": "Image Resizer"
+    "thumbnailGenerator": "Thumbnail Generator",
+    "imageResizer": "Image Resizer"
 }
 
 # Define which API endpoints use queue mode

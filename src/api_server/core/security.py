@@ -19,8 +19,12 @@ class SecurityManager:
     
     async def authenticate_request(self, request: Request, call_next):
         """Middleware for API key authentication."""
-        if request.url.path.startswith(("/docs", "/redoc", "/openapi.json", "/favicon.ico")):
-            # Skip authentication for documentation paths
+        # Skip authentication for documentation paths and OpenAPI schema if configured
+        if request.url.path.startswith(("/docs", "/redoc", "/favicon.ico")):
+            return await call_next(request)
+            
+        # Skip authentication for OpenAPI schema if configured
+        if request.url.path.startswith("/openapi") and not self.config.openapi_authenticate:
             return await call_next(request)
         
         try:
@@ -62,6 +66,14 @@ class SecurityManager:
                 ).to_response()
             )
     
+    def get_request_http_host(self, request: Request) -> str:
+        """Get the http schema and netloc (e.g. https://api.endpoint.fqdn) of the request."""
+        # Check if the request.url is None, and if it is return http:// followed by the config file host and port
+        if request.url is None:
+            return f"http://{self.config.host}:{self.config.port}"            
+        else:
+            return f"{request.url.scheme}://{request.url.netloc}"
+
     def get_api_key_from_request(self, auth: HTTPBearer) -> str:
         """Extract and validate API key from request."""
         api_key = auth.credentials

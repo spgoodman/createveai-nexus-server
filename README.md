@@ -6,7 +6,7 @@ A versatile server that combines REST API and Model Context Protocol (MCP) funct
 
 - **Dual Protocol Support**: 
   - REST API for traditional HTTP-based integration
-  - MCP for WebSocket-based AI assistant integration
+  - MCP for AI assistant integration (via the TypeScript client server)
 - **Dynamic API Loading**: Load API modules from a configurable directory
 - **API Key Authentication**: Secure all endpoints with API key authentication
 - **Queue System**: Handle long-running processes with a robust queue system
@@ -24,7 +24,7 @@ Comprehensive documentation is available in the `docs` directory:
 - [Architecture Overview](docs/architecture.md) - Details of the server architecture
 - [Custom API Guide](docs/custom-api-guide.md) - How to create custom API modules
 - [API Usage Guide](docs/api-usage.md) - How to use the API endpoints
-- [MCP Integration Guide](docs/mcp-integration.md) - How to use the MCP functionality
+- [MCP Client Server](docs/mcp-server.md) - Using the TypeScript MCP client server
 
 ## Configuration
 
@@ -43,15 +43,6 @@ security:
   api_keys: # API keys for authentication
     - key: "sk-apiservertest1"
       description: "API Key 1"
-
-mcp_server:
-  enabled: true # Enable MCP server functionality
-  server_info:
-    name: "createveai-nexus" # Server name
-    version: "1.0.0" # Server version
-    description: "Createve.AI Nexus Server MCP Interface" # Server description
-  tools:
-    auto_map_apis: true # Automatically map API endpoints to MCP tools
 ```
 
 An alternative config file can be specified when launching the server with `python main.py --config ./config.yaml`
@@ -133,7 +124,14 @@ The MCP functionality allows AI assistants to interact with the server using the
 2. Execute tools with parameters
 3. Access resources like queue status and documentation
 
-To connect to the MCP server, use a WebSocket connection to `ws://localhost:43080/mcp`.
+### TypeScript MCP Client Server
+
+The TypeScript MCP client server provides a local interface to a remote Nexus server:
+
+- Runs locally on the client machine
+- Connects to the Nexus server via REST API
+- Better security with local API key management
+- See [MCP Client Server](docs/mcp-server.md) for detailed documentation
 
 ## Testing
 
@@ -142,9 +140,6 @@ The server includes test scripts for verifying functionality:
 ```bash
 # Test API functionality
 python test_api.py
-
-# Test MCP functionality
-python test_mcp.py
 ```
 
 ## License

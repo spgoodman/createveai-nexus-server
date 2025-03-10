@@ -63,6 +63,11 @@ class ConfigManager:
         return self.config.get('security', {}).get('api_keys', [])
     
     @property
+    def openapi_authenticate(self) -> bool:
+        """Get OpenAPI authentication required flag."""
+        return self.config.get('security', {}).get('openapi_authenticate', True)
+    
+    @property
     def max_threads(self) -> int:
         """Get maximum number of worker threads."""
         return self.config.get('processing', {}).get('max_threads', 10)
@@ -131,65 +136,3 @@ class ConfigManager:
     def wait_for_processing_before_reload(self) -> bool:
         """Get wait for processing before reload flag."""
         return self.config.get('processing', {}).get('wait_for_processing_before_reload', True)
-    
-    # MCP Server Configuration Properties
-    
-    @property
-    def mcp_enabled(self) -> bool:
-        """Get MCP server enabled flag."""
-        return self.config.get('mcp_server', {}).get('enabled', False)
-    
-    @property
-    def mcp_server_name(self) -> str:
-        """Get MCP server name."""
-        return self.config.get('mcp_server', {}).get('server_info', {}).get('name', 'createveai-nexus')
-    
-    @property
-    def mcp_server_version(self) -> str:
-        """Get MCP server version."""
-        return self.config.get('mcp_server', {}).get('server_info', {}).get('version', '1.0.0')
-    
-    @property
-    def mcp_server_description(self) -> str:
-        """Get MCP server description."""
-        return self.config.get('mcp_server', {}).get('server_info', {}).get('description', 'Createve.AI Nexus Server MCP Interface')
-    
-    @property
-    def mcp_auto_map_apis(self) -> bool:
-        """Get MCP auto map APIs flag."""
-        return self.config.get('mcp_server', {}).get('tools', {}).get('auto_map_apis', True)
-    
-    @property
-    def mcp_excluded_apis(self) -> List[str]:
-        """Get MCP excluded APIs list."""
-        return self.config.get('mcp_server', {}).get('tools', {}).get('excluded_apis', [])
-    
-    @property
-    def mcp_additional_tools(self) -> List[Dict[str, Any]]:
-        """Get MCP additional tools list."""
-        return self.config.get('mcp_server', {}).get('tools', {}).get('additional_tools', [])
-    
-    @property
-    def mcp_expose_queue(self) -> bool:
-        """Get MCP expose queue flag."""
-        return self.config.get('mcp_server', {}).get('resources', {}).get('expose_queue', True)
-    
-    @property
-    def mcp_expose_docs(self) -> bool:
-        """Get MCP expose docs flag."""
-        return self.config.get('mcp_server', {}).get('resources', {}).get('expose_docs', True)
-    
-    @property
-    def mcp_expose_logs(self) -> bool:
-        """Get MCP expose logs flag."""
-        return self.config.get('mcp_server', {}).get('resources', {}).get('expose_logs', False)
-    
-    @property
-    def mcp_use_api_keys(self) -> bool:
-        """Get MCP use API keys flag."""
-        return self.config.get('mcp_server', {}).get('security', {}).get('use_api_keys', True)
-    
-    @property
-    def mcp_require_authentication(self) -> bool:
-        """Get MCP require authentication flag."""
-        return self.config.get('mcp_server', {}).get('security', {}).get('require_authentication', True)

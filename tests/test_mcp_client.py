@@ -4,9 +4,9 @@ import websockets
 import sys
 
 async def test_mcp_server():
-    # Connect to the MCP server
+    # Connect to the TypeScript MCP client server
     headers = {"Authorization": "Bearer sk-apiservertest1"}
-    uri = "ws://10.152.0.5:43080/mcp"
+    uri = "ws://localhost:3000/mcp"  # Adjust this port to match your TypeScript MCP server configuration
     
     print(f"Connecting to {uri} with auth header...")
     
@@ -40,7 +40,7 @@ async def test_mcp_server():
             print(f"Received tools list: {json.dumps(response_data, indent=2)}")
             
             # Use text_processing_textAnalyzer tool
-            print("\nSending call_tool_request for text_processing_textAnalyzer...")
+            print("\nSending call_tool_request for text_processing_textAnalyzer (via TypeScript MCP client server)...")
             await websocket.send(json.dumps({
                 "type": "call_tool_request",
                 "request_id": "test-123",
@@ -63,5 +63,7 @@ async def test_mcp_server():
     return True
 
 if __name__ == "__main__":
+    print("Testing connection to TypeScript MCP client server")
+    print("Note: Make sure the TypeScript MCP client server is running before executing this test")
     success = asyncio.run(test_mcp_server())
     sys.exit(0 if success else 1)

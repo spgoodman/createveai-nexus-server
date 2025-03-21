@@ -1,135 +1,169 @@
-# Createve.AI Nexus Server
+# Createve.AI Nexus: Enabling Real-World AI Agent Deployment 🚀
 
-The Createve.AI Nexus Server acts as a versatile bridge, connecting Microsoft Copilot Studio to a wide range of capabilities via the Model Context Protocol (MCP). It empowers AI agents with:
+**The Open-Source Bridge Between AI Agents and Enterprise Systems - Unlock Your Organization's Data and Capabilities**
 
-*   **Access to Emerging AI Technologies:** Leverage the power of Python libraries and modules, including ComfyUI custom nodes, to enable cutting-edge AI scenarios.
-*   **Secure Line of Business Data Access:** Establish secure Private Link connections to your internal applications, providing structured and controlled data access through familiar Python tools, APIs, databases, and real-time data warehouses.
+In today's AI landscape, the greatest challenge isn't the AI models themselves—it's connecting them to real-world data and systems. The Model Context Protocol (MCP) solves this by providing a universal standard for AI systems to securely access data and capabilities. Createve.AI Nexus, an open-source solution from RootUK, implements this standard to bridge AI agents with your enterprise systems, making deployment simple and scalable.
 
-## Key Features
+> 📢 **Preview Feature Notice**: MCP support in Microsoft Copilot Studio is currently in preview. Early adopters can start building their integration today to be ready when the feature becomes generally available.
 
-*   **Universal Copilot Studio Bridge:** Seamless integration with Copilot Studio agents via MCP.
-*   **Emerging AI Connectivity:** Access the latest AI advancements through Python libraries and modules.
-*   **Creative AI Capabilities:** Enable Copilot Studio agents to generate 3D models, create videos, and design marketing images.
-*   **Secure LOB Data Integration:** Secure Private Link connections to line of business applications.
-*   **Structured Data Access:** Controlled access to data using Python libraries, APIs, and database connections.
-*   **Real-time Data Connectivity:** Access real-time data from data warehouses, Apache Spark, Databricks, Oracle, SQL Server, and Azure SQL Managed Instances.
-*   **Automated Action Implementation:** Interact with internal websites and automate actions.
-*   **Sensor Data Integration:** Connect to sensor data for real-time insights.
-*   **Optional Azure Key Vault Integration:** Securely manage API keys and secrets with Azure Key Vault (disable for local testing).
-*   **Dual Protocol Support:** REST API and MCP for flexible integration.
-*   **Dynamic API Loading:** Load API modules from a configurable directory.
-*   **API Key Authentication:** Secure all endpoints with API key authentication.
-*   **Queue System:** Robust queue system for long-running processes.
-*   **Auto-Reload:** Automatically reload when API files change.
-*   **OpenAPI Documentation:** Interactive API documentation with Swagger UI.
-*   **File Type Handling:** Base64 encoding/decoding for image and file types.
-*   **Logging & Error Handling:** Comprehensive logging and structured error responses.
-*   **State Persistence:** Queue state persistence for recovery after restart.
-*   **Containerization:** Compatible with Docker and systemd.
+Connect your AI agents to:
+- Line-of-business applications through secure Private Link connections
+- Real-time manufacturing and sensor data
+- Document management systems and knowledge bases
+- Custom AI models and processing pipelines
+- Internal workflow automation systems
 
-## Use Cases
+**Why Choose Createve.AI Nexus?** ✨
 
-*   **3D Model Creation:** Imagine a Copilot Studio agent that can design and generate 3D models based on user specifications. By leveraging Python libraries like `trimesh` or `blender`, the Createve.AI Nexus Server can provide the agent with the necessary tools to create, modify, and export 3D models in various formats.
-*   **Video Generation:** Copilot Studio agents can create engaging videos for marketing or training purposes. By integrating with libraries such as `moviepy`, the agent can automate video editing tasks, add effects, and generate high-quality video content.
-*   **Marketing Image Design:** Empower your agents to design compelling marketing images. Using libraries like `Pillow` and `scikit-image`, the agent can automate image manipulation tasks, add text overlays, and optimize images for different platforms.
-*   **Real-time Inventory Management:** Connect your Copilot Studio agent to your real-time data warehouse to provide up-to-the-minute inventory information. Using Python libraries to connect to Oracle, SQL Server or cloud based solutions such as Databricks, your agent can keep on top of stock levels and generate low stock alerts.
-*   **Automated Website Interactions:** Use the Createve.AI Nexus Server to enable Copilot Studio agents to interact with internal websites. Agents can fill in forms, click buttons, and extract data to automate website based tasks such as employee onboarding.
+* **Universal AI Agent Integration:** 🤖
+  - Native support for Microsoft Copilot Studio via MCP (Preview) ([Learn more](https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/introducing-model-context-protocol-mcp-in-copilot-studio-simplified-integration-with-ai-apps-and-agents/))
+  - Built-in compatibility with Anthropic's Claude via desktop app ([MCP details](https://www.anthropic.com/news/model-context-protocol))
+  - Works with any MCP-enabled client or AI agent
+  - OpenAPI support for platforms like [Dify](https://github.com/langgenius/dify)
 
-## Documentation
+* **Enterprise-Ready Architecture:** 🏢
+  - Deploy in Azure with built-in support for Private Link
+  - Key Vault integration for secure secrets management
+  - Azure AD integration for enterprise identity
+  - Comprehensive security controls
+
+* **Real-Time Data Access:** ⚡
+  - Stream sensor data and metrics
+  - Monitor production systems
+  - Access live business data
+  - Real-time analytics integration
+
+* **Secure System Integration:** 🔒
+  - Role-based access control
+  - Audit logging and monitoring
+  - Data encryption in transit and at rest
+  - Granular permission management
+
+**Real-World Deployment Examples:** 🌟
+
+1. **Manufacturing Intelligence** *(Copilot Studio MCP integration in preview)*
+
+```mermaid
+graph LR
+    CS[Copilot Studio] --> CN[Createve.AI Nexus]
+    CN --> PL[Production Line]
+    CN --> EQ[Equipment Sensors]
+    CN --> MT[Maintenance System]
+    
+    classDef agent fill:#00a1f1,stroke:#fff,color:#fff;
+    classDef nexus fill:#7fba00,stroke:#fff,color:#fff;
+    classDef system fill:#737373,stroke:#fff,color:#fff;
+    
+    class CS agent;
+    class CN nexus;
+    class PL,EQ,MT system;
+```
+
+2. **Enterprise Data Integration** *(Copilot Studio MCP integration in preview)*
+
+```mermaid
+graph LR
+    CS[Copilot Studio] --> CN[Createve.AI Nexus]
+    CN --> DB[(Business Database)]
+    CN --> CRM[CRM System]
+    CN --> DMS[Document Store]
+    
+    classDef agent fill:#00a1f1,stroke:#fff,color:#fff;
+    classDef nexus fill:#7fba00,stroke:#fff,color:#fff;
+    classDef system fill:#737373,stroke:#fff,color:#fff;
+    
+    class CS agent;
+    class CN nexus;
+    class DB,CRM,DMS system;
+```
+
+3. **AI Model Orchestration** *(Copilot Studio MCP integration in preview)*
+
+```mermaid
+graph LR
+    CS[Copilot Studio] --> CN[Createve.AI Nexus]
+    CN --> CV[Computer Vision]
+    CN --> NLP[Language Models]
+    CN --> GEN[Media Generation]
+    
+    classDef agent fill:#00a1f1,stroke:#fff,color:#fff;
+    classDef nexus fill:#7fba00,stroke:#fff,color:#fff;
+    classDef system fill:#737373,stroke:#fff,color:#fff;
+    
+    class CS agent;
+    class CN nexus;
+    class CV,NLP,GEN system;
+```
+
+**Understanding MCP (Model Context Protocol)** 🔗
+
+MCP is an open standard that solves a critical challenge in AI deployment: connecting AI systems to real-world data and capabilities. Instead of building custom integrations for every data source, MCP provides:
+
+- **Universal Connectivity:** A single protocol for all data sources
+- **Two-Way Communication:** AI systems can both read and act on data
+- **Dynamic Discovery:** AI agents automatically learn available capabilities
+- **Security First:** Built-in security and access control
+- **Real-Time Updates:** Live data and streaming support
+
+Createve.AI Nexus implements MCP to make your data and systems accessible to any MCP-enabled AI agent, while also providing OpenAPI compatibility for traditional integration patterns.
+
+**Key Features:** 💫
+
+* **AI Agent Integration:** 🤝
+  - Native MCP support for seamless agent connectivity
+  - Real-time data synchronization
+  - Automatic tool discovery and updates
+  - Support for all major AI platforms
+
+* **Enterprise Security:** 🛡️
+  - Azure Private Link integration
+  - Key Vault secret management
+  - API key authentication
+  - Granular access control
+
+* **System Integration:** 🔄
+  - Universal database connectivity
+  - Real-time data streaming
+  - Event-driven architecture
+  - Message queue support
+
+* **Development Framework:** 👨‍💻
+  - Modular API architecture
+  - Dynamic endpoint loading
+  - Comprehensive monitoring
+  - Docker containerization
+
+* **Processing Capabilities:** ⚙️
+  - Long-running job management
+  - Auto-scaling support
+  - State persistence
+  - Error recovery
+
+**Documentation:** 📚
 
 Comprehensive documentation is available in the `docs` directory:
 
-*   [Setup Guide](docs/setup.md) - Instructions for installing and configuring the Createve.AI Nexus Server.
-*   [Architecture Overview](docs/architecture.md) - Details of the server architecture.
-*   [Custom API Guide](docs/custom-api-guide.md) - How to create custom API modules.
-*   [API Usage Guide](docs/api-usage.md) - How to use the API endpoints.
-*   [MCP Integration Guide](docs/mcp-integration.md) - How to use the MCP functionality.
-*   [Azure Reference Architecture](docs/azure-reference-architecture.md) - Reference architecture for deployment in Azure.
-*   [n8n Nodes](docs/n8n-nodes.md) - n8n nodes for integrating with Nexus
+* [Setup Guide](docs/setup.md) - Installation and configuration
+* [Configuration Guide](docs/configuration.md) - Detailed configuration options
+* [Quick Start: Custom Integrations](docs/quick-start-integration.md) - Create your first integration
+* [Architecture Overview](docs/architecture.md) - System architecture and components
+* [Custom API Guide](docs/custom-api-guide.md) - Advanced integration development
+* [API Usage Guide](docs/api-usage.md) - REST API documentation
+* [MCP Integration Guide](docs/mcp-integration.md) - Detailed MCP implementation
+* [Azure Reference Architecture](docs/azure-reference-architecture.md) - Enterprise deployment patterns
+* [n8n Nodes](docs/n8n-nodes.md) - Workflow automation integration
 
-## Configuration
+**Expert Integration Services** 💼
 
-The config is stored in `config.yaml`. This contains settings for both the API server and MCP functionality.
+Need help deploying Createve.AI Nexus in your organization? [RootUK](http://rootuk.com) provides enterprise consulting services:
 
-```yaml
-apiserver:
-  host: 0.0.0.0 # Host to listen on
-  port: 43080 # Port to listen on
-  debug: true # Debug to console
-  log: true # Log to file
-  log_file: logs/apiserver.log # Log file relevative to main.py
-  apis_dir: custom_apis # Directory containing Python source for API interfaces to load and serve using FastAPI, relevative to main.py
-security:
-  api_keys: # List of API keys that are valid for accessing the API server. Each has access to its own queue of jobs
-    - key: "sk-apiservertest1"
-      description: "API Key 1"
+* **Architecture Design:** Plan your integration strategy
+* **Custom Development:** Build specialized connectors
+* **Deployment Support:** Ensure successful implementation
+* **Security Review:** Validate your security model
 
-mcp_server:
-  enabled: true # Enable MCP server functionality
-  server_info:
-    name: "createveai-nexus" # Server name
-    version: "1.0.0" # Server version
-    description: "Createve.AI Nexus Server MCP Interface" # Server description
-  tools:
-    auto_map_apis: true # Automatically map API endpoints to MCP tools
-```
+Contact RootUK to discuss your enterprise AI integration needs.
 
-An alternative config file can be specified when launching the server with `python main.py --config ./config.yaml`
+**License:** ⚖️
 
-## API Definitions
-
-The APIs are loaded from the defined `custom_apis` folder, each in a subfolder structure that contains an `__init__.py` file which will load the relevant classes from the same/sub-folders.
-
-The API definitions are inspired by ComfyUI's custom nodes and use the same structures for defining inputs and outputs. These APIs are exposed both as REST endpoints and MCP tools.
-
-```python
-class TextAnalyzer:
-    """Text analyzer for sentiment and statistics."""
-
-    CATEGORY = "text"
-
-    @classmethod
-    def INPUT_TYPES(cls):
-        return {
-            "required": {
-                "text": ("STRING", {"multiline": True}),
-            },
-            "optional": {
-                "include_sentiment": ("BOOLEAN", {"default": True})
-            }
-        }
-
-    RETURN_TYPES = ("DICT",)
-    RETURN_NAMES = ("analysis_results",)
-    FUNCTION = "analyze_text"
-
-    def analyze_text(self, text, include_sentiment=True):
-        # Implementation here
-        return (result,)
-```
-
-## Using the MCP Functionality
-
-The MCP functionality allows AI assistants to interact with the server using the Model Context Protocol. This enables assistants to:
-
-1.  Discover available tools (derived from API endpoints)
-2.  Execute tools with parameters
-3.  Access resources like queue status and documentation
-
-To connect to the MCP server, use a WebSocket connection to `ws://localhost:43080/mcp`.
-
-## Testing
-
-The server includes test scripts for verifying functionality:
-
-```bash
-# Test API functionality
-python test_api.py
-
-# Test MCP functionality
-python test_mcp.py
-```
-
-## License
-
-This project is licensed under the [Apache Licence v2](LICENCE)
+This project is licensed under the [Apache License v2](LICENSE)

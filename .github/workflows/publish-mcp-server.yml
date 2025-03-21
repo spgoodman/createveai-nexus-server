@@ -1,0 +1,55 @@
+# .github/workflows/publish-mcp-server.yml
+name: Publish MCP Server
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/mcp_server
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@createveai'
+      
+      - name: Install dependencies
+        run: npm install --production
+      
+      - name: Verify build files
+        run: |
+          ls -la
+          ls -la build/ || echo "Build directory not found or not included in repository!"
+          if [ ! -f build/index.js ]; then
+            echo "Build files missing! Make sure to commit build directory to repository."
+            exit 1
+          fi
+          # Ensure executable permissions (files might lose exec bit in git)
+          chmod +x build/index.js
+      
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
+      - name: Set package version from release
+        run: npm version --no-git-tag-version ${{ steps.get_version.outputs.VERSION }}
+      
+      - name: Check package contents before publishing
+        run: |
+          npm pack
+          tar -tvf *.tgz
+          
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

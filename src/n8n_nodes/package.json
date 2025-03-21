@@ -1,0 +1,74 @@
+{
+  "name": "@createveai/n8n-nodes-nexus-openapi",
+  "version": "0.1.0",
+  "description": "n8n nodes for Createve.AI Nexus API with dynamic OpenAPI schema integration",
+  "keywords": [
+    "n8n",
+    "n8n-community-node-package",
+    "createveai",
+    "nexus",
+    "openapi"
+  ],
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Createve.AI",
+    "email": "info@createve.ai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spgoodman/createveai-nexus-server.git",
+    "directory": "src/n8n_nodes"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "tsc --watch",
+    "format": "prettier --write \"**/*.ts\"",
+    "lint": "eslint \"**/*.ts\"",
+    "lintfix": "eslint \"**/*.ts\" --fix",
+    "prepublishOnly": "npm run build",
+    "test": "jest"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE",
+    "nodes/createveai.svg"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/CreateveAIApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/CreateveAI.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.1",
+    "@types/node": "^18.16.3",
+    "@types/request-promise-native": "^1.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.40.0",
+    "eslint-plugin-n8n-nodes-base": "^1.13.1",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
+    "tsc-alias": "^1.8.6",
+    "typescript": "~4.9.5"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "n8n-core": "^1.0.0",
+    "n8n-workflow": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

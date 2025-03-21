@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Createve.AI Node Icon</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle fill="#1976D2" cx="12" cy="12" r="10"></circle>
+        <path d="M7,10 L17,10 C17.5522847,10 18,10.4477153 18,11 L18,13 C18,13.5522847 17.5522847,14 17,14 L7,14 C6.44771525,14 6,13.5522847 6,13 L6,11 C6,10.4477153 6.44771525,10 7,10 Z" fill="#FFFFFF"></path>
+        <circle fill="#FFFFFF" cx="10" cy="8" r="1.5"></circle>
+        <circle fill="#FFFFFF" cx="14" cy="16" r="1.5"></circle>
+    </g>
+</svg>

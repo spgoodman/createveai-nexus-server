@@ -150,7 +150,6 @@ class OpenAPIGenerator:
             "post": {
                 "summary": api_info.get('display_name', api_path),
                 "description": api_info.get('description', ''),
-                "tags": [api_info.get('category', 'api')],
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -187,6 +186,12 @@ class OpenAPIGenerator:
                 }
             }
         }
+
+        # Add Agentic tag for /modelcontextprotocol/invoke endpoint
+        if api_path == "modelcontextprotocol/invoke":
+            method["post"]["tags"] = ["Agentic"]
+        else:
+            method["post"]["tags"] = [api_info.get('category', 'api')]
         
         # If queue mode, return queue ID instead of response
         if api_info.get('queue_mode', False):

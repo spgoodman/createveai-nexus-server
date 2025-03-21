@@ -1,9 +1,18 @@
 # Createve.AI Nexus Server
 
-A versatile server that combines REST API and Model Context Protocol (MCP) functionality in a single unified platform.
+A versatile server designed as a universal bridge for Microsoft Copilot Studio, empowering agents through Model Context Protocol (MCP) with a) access to emerging AI technologies via Python libraries/modules (and ComfyUI custom nodes), enabling scenarios like 3D model creation, video generation, and marketing image design, and b) secure Private Link connections to line of business applications, offering structured and controlled access to data using commonplace Python libraries, APIs, database connections, and real-time data warehouses.
 
 ## Features
 
+- **Universal Copilot Studio Bridge**: Designed for seamless integration with Copilot Studio agents via MCP.
+- **Access to Emerging AI**: Connects to new AI technologies as they get released through Python libraries/modules.
+- **Creative Capabilities**: Facilitates scenarios such as Copilot Studio agents creating 3D models, videos, and marketing images.
+- **Secure LOB Data Access**: Provides secure Private Link connections to line of business applications.
+- **Structured and Controlled Access**: Offers structured and controlled access to data using commonplace Python libraries, APIs, and database connections.
+- **Real-time Data Connectivity**: Enables real-time access to data warehouses from various vendors, connections to data in Apache Spark or Databricks, connections to Oracle, SQL Server, Azure SQL managed instances.
+- **Automated Action Implementation**: enables interaction with internal websites and performing automated actions
+- **Sensor Data Integration**: Supports connecting to sensor data for real-time insights.
+- **Optional Azure Key Vault Integration**: Securely manages API keys and other secrets by integrating with Azure Key Vault (can be disabled for local testing).
 - **Dual Protocol Support**: 
   - REST API for traditional HTTP-based integration
   - MCP for WebSocket-based AI assistant integration
@@ -25,6 +34,7 @@ Comprehensive documentation is available in the `docs` directory:
 - [Custom API Guide](docs/custom-api-guide.md) - How to create custom API modules
 - [API Usage Guide](docs/api-usage.md) - How to use the API endpoints
 - [MCP Integration Guide](docs/mcp-integration.md) - How to use the MCP functionality
+- [Azure Reference Architecture](docs/azure-reference-architecture.md) - Reference architecture for deployment in Azure
 
 ## Configuration
 
@@ -32,15 +42,14 @@ The config is stored in config.yaml. This contains settings for both the API ser
 
 ```yaml
 apiserver:
-  host: localhost # Host to listen on
+  host: 0.0.0.0 # Host to listen on
   port: 43080 # Port to listen on
   debug: true # Debug to console
   log: true # Log to file
-  log_file: logs/apiserver.log # Log file path
-  apis_dir: custom_apis # Directory containing API modules to load
-
+  log_file: logs/apiserver.log # Log file relevative to main.py
+  apis_dir: custom_apis # Directory containing Python source for API interfaces to load and serve using FastAPI, relevative to main.py
 security:
-  api_keys: # API keys for authentication
+  api_keys: # List of API keys that are valid for accessing the API server. Each has access to its own queue of jobs
     - key: "sk-apiservertest1"
       description: "API Key 1"
 

@@ -24,8 +24,8 @@ If authentication is enabled (`mcp_require_authentication` is set to `true` in t
 
 The MCP server supports two main capabilities:
 
-1. **Tools**: API endpoints exposed as executable tools
-2. **Resources**: Server data exposed as accessible resources
+1.  **Tools**: API endpoints exposed as executable tools
+2.  **Resources**: Server data exposed as accessible resources
 
 To query the server's capabilities, send a `capabilities_request` message:
 
@@ -180,9 +180,9 @@ For queue mode API endpoints, you'll get a queue ID that you can use to check th
 
 Resources are server data exposed for access by MCP clients. The Createve.AI Nexus Server exposes several types of resources:
 
-1. **Queue Resources**: Information about queued requests
-2. **Documentation Resources**: Server documentation and API specifications
-3. **Log Resources**: Server logs (if enabled)
+1.  **Queue Resources**: Information about queued requests
+2.  **Documentation Resources**: Server documentation and API specifications
+3.  **Log Resources**: Server logs (if enabled)
 
 ### Listing Resources
 
@@ -260,9 +260,7 @@ To read a resource, send a `read_resource_request` message:
 
 ```json
 {
-  "type": "read_resource_request",
-  "request_id": "def456",
-  "uri": "docs://readme"
+  "type": "read_resource_request"
 }
 ```
 
@@ -323,12 +321,12 @@ If an error occurs, the server will respond with an error message:
 
 Common error codes include:
 
-- `invalid_json`: Invalid JSON in the request
-- `unknown_message_type`: Unknown message type
-- `invalid_request`: Missing or invalid request parameters
-- `tool_not_found`: Requested tool not found
-- `resource_not_found`: Requested resource not found
-- `internal_error`: Internal server error
+*   `invalid_json`: Invalid JSON in the request
+*   `unknown_message_type`: Unknown message type
+*   `invalid_request`: Missing or invalid request parameters
+*   `tool_not_found`: Requested tool not found
+*   `resource_not_found`: Requested resource not found
+*   `internal_error`: Internal server error
 
 ## Examples
 
@@ -336,11 +334,11 @@ Common error codes include:
 
 Here's a complete example of executing a tool:
 
-1. Connect to the WebSocket
-2. Receive server info
-3. List available tools
-4. Execute a tool
-5. Receive the result
+1.  Connect to the WebSocket
+2.  Receive server info
+3.  List available tools
+4.  Execute a tool
+5.  Receive the result
 
 ```javascript
 const ws = new WebSocket('ws://localhost:43080/mcp');
@@ -419,15 +417,74 @@ ws.onmessage = (event) => {
 
 To integrate the MCP server with an AI assistant:
 
-1. Configure the AI assistant to connect to the MCP server
-2. The assistant will discover available tools and resources
-3. The assistant can execute tools and access resources as needed
+1.  Configure the AI assistant to connect to the MCP server
+2.  The assistant will discover available tools and resources
+3.  The assistant can execute tools and access resources as needed
 
 For Claude, this would typically be configured in the Claude Dev environment settings.
 
 ## Security Considerations
 
-- All MCP communications should be secured with TLS in production
-- API keys should be kept secure and rotated regularly
-- Consider restricting the tools and resources that are exposed to MCP clients
-- Monitor MCP usage for suspicious activity
+*   All MCP communications should be secured with TLS in production
+*   API keys should be kept secure and rotated regularly
+*   Consider restricting the tools and resources that are exposed to MCP clients
+*   Monitor MCP usage for suspicious activity
+
+## Integrating with Microsoft Copilot Studio
+
+This section explains how to connect the Createve.AI Nexus Server to Microsoft Copilot Studio using a custom connector.
+
+### Prerequisites
+
+*   A Microsoft Copilot Studio account
+*   Access to Power Apps or Power Automate
+*   An API key for the Createve.AI Nexus Server
+
+### Steps
+
+1.  **Obtain the OpenAPI Schema:**
+
+    *   Access the OpenAPI schema for your Createve.AI Nexus Server by navigating to `/openapi.json` in your browser (e.g., `http://localhost:43080/openapi.json`).
+    *   Save the content to a file (e.g., `openapi.json`).
+
+2.  **Create a Custom Connector:**
+
+    *   In Power Apps or Power Automate, create a new custom connector.
+    *   Select "Import OpenAPI file".
+    *   Upload the `openapi.json` file you saved in the previous step.
+    *   Click "Continue" to complete the setup.
+
+3.  **Configure Authentication:**
+
+    *   In the custom connector settings, configure authentication to use an API key.
+    *   Provide your Createve.AI Nexus Server API key in the "Authorization" header as a Bearer token.
+
+4.  **Verify the "Agentic" Tag:**
+
+    *   Ensure that your custom connector includes the tag, `Agentic`, so that it appears in Copilot Studio after creation. The Createve.AI Nexus Server automatically adds this tag to the `/modelcontextprotocol/invoke` endpoint in the generated OpenAPI schema.
+
+5.  **Connect to Copilot Studio:**
+
+    *   In Copilot Studio, select "Agents" in the left navigation.
+    *   Select your agent from the list.
+    *   Go to the "Actions" page for your agent.
+    *   Select "Add an action".
+    *   Select "Connector". A list of connectors, including your custom connector, will be displayed.
+    *   Select your custom connector from the list.
+    *   Authorize the connection, entering any information that is needed (e.g., your API key).
+
+### Connecting with Server-Sent Events (SSE)
+
+The Createve.AI Nexus Server supports both WebSocket and Server-Sent Events (SSE) for MCP communication. To use SSE with Copilot Studio:
+
+1.  When creating the custom connector, ensure that the connector is configured to use SSE for communication.
+2.  Use the `/mcp_sse` endpoint for SSE connections.
+
+### Example Connection URLs
+
+*   **WebSocket:** `ws://localhost:43080/mcp`
+*   **SSE:** `http://localhost:43080/mcp_sse`
+
+### Note
+
+Make sure your custom connector includes the tag, `Agentic`, so that it appears in Copilot Studio after creation.

@@ -19,26 +19,26 @@ from .api import (
 
 # Map display names to class objects
 NODE_CLASS_MAPPINGS = {
-    "LinkedIn Profile Fetcher": LinkedInProfileFetcher,
-    "LinkedIn People Search": LinkedInPeopleSearch,
-    "LinkedIn Job Search": LinkedInJobSearch,
-    "LinkedIn Messaging": LinkedInMessaging,
-    "LinkedIn Company Info": LinkedInCompanyInfo,
-    "LinkedIn Connection Manager": LinkedInConnectionManager,
-    "LinkedIn Conversation Fetcher": LinkedInConversationFetcher,
-    "LinkedIn Profile View Tracker": LinkedInProfileViewTracker
+    "linkedInProfileFetcher": LinkedInProfileFetcher,
+    "linkedInPeopleSearch": LinkedInPeopleSearch,
+    "linkedInJobSearch": LinkedInJobSearch,
+    "linkedInMessaging": LinkedInMessaging,
+    "linkedInCompanyInfo": LinkedInCompanyInfo,
+    "linkedInConnectionManager": LinkedInConnectionManager,
+    "linkedInConversationFetcher": LinkedInConversationFetcher,
+    "linkedInProfileViewTracker": LinkedInProfileViewTracker
 }
 
 # Map class names to human-readable display names
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LinkedIn Profile Fetcher": "LinkedIn Profile Fetcher",
-    "LinkedIn People Search": "LinkedIn People Search",
-    "LinkedIn Job Search": "LinkedIn Job Search",
-    "LinkedIn Messaging": "LinkedIn Messaging",
-    "LinkedIn Company Info": "LinkedIn Company Info",
-    "LinkedIn Connection Manager": "LinkedIn Connection Manager",
-    "LinkedIn Conversation Fetcher": "LinkedIn Conversation Fetcher",
-    "LinkedIn Profile View Tracker": "LinkedIn Profile View Tracker"
+    "linkedInProfileFetcher": "LinkedIn Profile Fetcher",
+    "linkedInPeopleSearch": "LinkedIn People Search",
+    "linkedInJobSearch": "LinkedIn Job Search",
+    "linkedInMessaging": "LinkedIn Messaging",
+    "linkedInCompanyInfo": "LinkedIn Company Info",
+    "linkedInConnectionManager": "LinkedIn Connection Manager",
+    "linkedInConversationFetcher": "LinkedIn Conversation Fetcher",
+    "linkedInProfileViewTracker": "LinkedIn Profile View Tracker"
 }
 
 # Define processing mode for each endpoint

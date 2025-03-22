@@ -1,0 +1,54 @@
+# Test configuration for MCP server
+
+# Server configuration
+server:
+  host: "127.0.0.1"
+  port: 8000
+  reload: false
+  workers: 1
+
+# Security settings
+security:
+  api_keys:
+    - "test_key"
+  require_api_key: false
+
+# Logging settings
+logging:
+  enabled: true
+  level: "DEBUG"
+  file: "tests/test.log"
+  console: true
+
+# API settings
+api:
+  auto_reload: false
+  custom_apis_dir: "custom_apis"
+  reload_on_api_dir_change: false
+  reload_on_api_file_change: false
+
+# Queue settings
+queue:
+  enabled: true
+  max_workers: 2
+  max_retries: 3
+  retry_delay_seconds: 1
+
+# MCP settings
+mcp:
+  enabled: true
+  server_name: "Test MCP Server"
+  server_version: "1.0.0"
+  server_description: "Test MCP server for running tests"
+  auto_map_apis: true
+  expose_queue: true
+  expose_docs: true
+  require_authentication: false
+  swagger:
+    title: "Test MCP Server API"
+    description: "OpenAPI specification for Test MCP Server"
+    version: "1.0.0"
+    host: "localhost:8000"
+    base_path: "/"
+    schemes:
+      - "https"

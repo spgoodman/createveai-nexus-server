@@ -28,7 +28,25 @@ async def create_app(config_path: str = "./config.yaml"):
         description="API and MCP server for various services",
         version="1.0.0"
     )
-    
+
+    # Initialize MCP if enabled
+    if config.mcp_enabled:
+        # Initialize FastMCP
+        from mcp.server.fastmcp import FastMCP
+        
+        mcp = FastMCP(
+            config.mcp_server_name,
+            version=config.mcp_server_version,
+            description=config.mcp_server_description
+        )
+
+        # Mount MCP server
+        app.mount("/mcp", app=mcp.sse_app())
+
+        logger.info(f"MCP server initialized: {config.mcp_server_name}")
+    else:
+        logger.info("MCP server is disabled")
+
     # Add CORS middleware
     app.add_middleware(
         CORSMiddleware,
@@ -72,7 +90,7 @@ async def create_app(config_path: str = "./config.yaml"):
     if config.mcp_enabled:
         logger.info("Initializing MCP server")
         mcp_server = MCPServer(app, config, logger, security_manager)
-        await mcp_server.setup_registries(api_executor, queue_manager, apis)
+        await mcp_server.setup_registries(api_executor, queue_manager, apis, mcp)
         logger.info(f"MCP server initialized: {config.mcp_server_name}")
     else:
         logger.info("MCP server is disabled")

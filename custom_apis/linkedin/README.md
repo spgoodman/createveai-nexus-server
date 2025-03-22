@@ -7,7 +7,7 @@ This module provides a comprehensive set of tools for interacting with LinkedIn 
 The module provides the following API endpoints:
 
 ### LinkedIn Profile Fetcher
-- Fetches detailed LinkedIn profile information
+- Fetches detailed LinkedIn profile information 
 - Includes work experience, education, and skills
 - Optional contact information retrieval
 - Supports both public ID and URN ID for profile identification
@@ -18,7 +18,7 @@ The module provides the following API endpoints:
 - Returns enriched profile information for each result
 - Configurable result limit
 
-### LinkedIn Job Search
+### LinkedIn Job Search  
 - Searches for job listings with comprehensive filtering options
 - Filters by experience level, job type, and remote work options
 - Retrieves detailed job information including required skills
@@ -26,7 +26,7 @@ The module provides the following API endpoints:
 
 ### LinkedIn Messaging
 - Sends messages to LinkedIn connections
-- Supports both existing conversations and starting new ones
+- Supports both existing conversations and starting new ones  
 - Requires either a conversation URN ID or recipient profile ID
 
 ### LinkedIn Company Info
@@ -72,7 +72,7 @@ Either:
 # Using the REST API
 response = requests.post(
     "http://localhost:43080/api/linkedin/linkedInProfileFetcher",
-    headers=headers,
+    headers=headers, 
     json={
         "profile_identifier": "john-doe",
         "include_contact_info": True,
@@ -81,12 +81,12 @@ response = requests.post(
 )
 profile_data = response.json()
 
-# Using the MCP tool
+# Using the MCP tool 
 result = claude.use_mcp_tool(
     server_name="createveai-nexus-server",
     tool_name="LinkedIn Profile Fetcher",
     arguments={
-        "profile_identifier": "john-doe",
+        "profile_identifier": "john-doe", 
         "include_contact_info": True,
         "include_skills": True
     }
@@ -103,7 +103,7 @@ response = requests.post(
     json={
         "keywords": "Software Engineer",
         "location": "San Francisco",
-        "company_name": "Google",
+        "company_name": "Google", 
         "network_depth": "All",
         "max_results": 10
     }
@@ -166,7 +166,7 @@ company_data = response.json()
 ```python
 # Using the REST API
 response = requests.post(
-    "http://localhost:43080/api/linkedin/linkedInConnectionManager",
+    "http://localhost:43080/api/linkedin/linkedInConnectionManager", 
     headers=headers,
     json={
         "action_type": "add_connection",

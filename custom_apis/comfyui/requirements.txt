@@ -1,0 +1,15 @@
+# HTTP client for async API calls
+httpx>=0.24.0
+
+# YAML configuration parsing
+PyYAML>=6.0.0
+
+# Type hints support
+typing-extensions>=4.5.0
+
+# Async support
+aiofiles>=23.1.0
+websockets>=11.0.3
+
+# HTTP client for file uploads
+aiohttp>=3.8.0

@@ -1,0 +1,31 @@
+# ComfyUI API Configuration
+url: http://localhost:8188  # Default ComfyUI server URL
+workflows_directory: workflows  # Directory to store workflow files
+default_timeout: 300  # Default timeout in seconds for workflow execution
+
+# Workflow-specific settings
+workflows:
+  txt2img:
+    file: txt2img.json
+    timeout: 600  # Custom timeout for this workflow
+    default_params:
+      prompt: "A beautiful landscape"
+      negative_prompt: "blur, deformed"
+      width: 512
+      height: 512
+      steps: 20
+      cfg_scale: 7.0
+      seed: -1
+
+  img2img:
+    file: img2img.json
+    timeout: 300
+    default_params:
+      prompt: "A beautiful landscape"
+      negative_prompt: "blur, deformed"
+      denoising_strength: 0.75
+      width: 512
+      height: 512
+      steps: 20
+      cfg_scale: 7.0
+      seed: -1
